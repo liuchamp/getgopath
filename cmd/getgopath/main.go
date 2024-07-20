@@ -18,6 +18,9 @@ func getGoModulePath(dir string) (string, error) {
 	}
 
 	modulePath := strings.TrimSpace(string(output))
+	if modulePath == "command-line-arguments" {
+		return "", fmt.Errorf("this dir not in go project %s", dir)
+	}
 	return modulePath, nil
 }
 
@@ -31,6 +34,9 @@ func getGoModPath(dir string) (string, error) {
 	}
 
 	goModPath := strings.TrimSpace(string(output))
+	if goModPath == "" {
+		return "", fmt.Errorf("this dir not in go project %s", dir)
+	}
 	goModPath = strings.ReplaceAll(goModPath, "go.mod", "")
 	return goModPath, nil
 }
